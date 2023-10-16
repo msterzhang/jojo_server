@@ -10,6 +10,7 @@ if (drives != null) {
         setup() {
             const msg = ref(null);
             const q = ref(null);
+            const isref = ref(false);
             const data = ref(null);
             const error = ref(null);
             const checkedItmes = ref([]);
@@ -99,12 +100,13 @@ if (drives != null) {
                                 rigth = num.value
                             }
                             limt.value = (page.value - 1) * size.value + "-" + rigth;
-                            if (data.value != null) {
+                            if (isref.value) {
                                 Snackbar.show({ pos: 'top-center', text: "刷新成功!", showAction: false });
                             }
                         } else {
                             Snackbar.show({ pos: 'top-center', text: json.msg, showAction: false });
                         }
+                        isref.value = false;
                     })
                     .catch(err => {
                         error.value = err;
@@ -275,6 +277,7 @@ if (drives != null) {
             });
 
             const reF = async () => {
+                isref.value = true;
                 fetchData();
             };
             const create = async () => {
